@@ -1,4 +1,10 @@
-import { kv } from '@vercel/kv';
+import { createClient } from '@vercel/kv';
+
+// Create client with fallback specifically for Upstash integration if Vercel KV is hidden
+const kv = createClient({
+    url: process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL,
+    token: process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN,
+});
 
 export default async function handler(request, response) {
     try {
