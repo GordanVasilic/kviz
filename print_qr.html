@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="sr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Kod za Pano - Internet Heroj</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Fredoka', sans-serif;
+            background-color: white;
+        }
+
+        .container {
+            text-align: center;
+            border: 5px solid #4ECDC4;
+            padding: 40px;
+            border-radius: 30px;
+            background: #fff;
+        }
+
+        h1 {
+            color: #2C3E50;
+            font-size: 48px;
+            margin-bottom: 10px;
+            margin-top: 0;
+        }
+
+        p {
+            color: #FF6B6B;
+            font-size: 24px;
+            margin-bottom: 30px;
+            font-weight: bold;
+        }
+
+        #qrcode {
+            margin: 0 auto;
+            border: 10px solid white;
+            /* White border for better scanning contrast */
+        }
+
+        .footer {
+            margin-top: 20px;
+            color: #888;
+            font-size: 14px;
+        }
+
+        /* Hide everything else when printing if needed, but simple page is fine */
+        @media print {
+            body {
+                -webkit-print-color-adjust: exact;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>🌐 Internet Heroj Kviz 🛡️</h1>
+        <p>Skeniraj i pokaži šta znaš!</p>
+        <div id="qrcode"></div>
+        <div class="footer">kviz-omega.vercel.app</div>
+    </div>
+
+    <script>
+        // URL Kviza (Production Link)
+        const url = "https://kviz-omega.vercel.app/";
+
+        new QRCode(document.getElementById("qrcode"), {
+            text: url,
+            width: 300,
+            height: 300,
+            colorDark: "#000000",
+            colorLight: "#ffffff",
+            correctLevel: QRCode.CorrectLevel.H
+        });
+    </script>
+</body>
+
+</html>
