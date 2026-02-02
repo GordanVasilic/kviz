@@ -214,43 +214,58 @@ function startQuiz() {
     switchScreen(quizScreen);
 }
 
+// Re-implementation of showQuestion and checkAnswer for clarity in the file 
+// (Previous REPLACE call might have left it in a weird state if I didn't include the full logic inside the function body properly)
+
 function showQuestion() {
     const q = currentQuizQuestions[currentQuestionIndex];
     questionText.textContent = q.question;
     optionsContainer.innerHTML = '';
 
-    // Create status flags so user can't click multiple times
-    let answered = false;
+    // Map options to objects to track correctness
+    const shuffledOptions = q.options.map((opt, index) => ({
+        text: opt,
+        isCorrect: index === q.answer
+    }));
 
-    q.options.forEach((opt, index) => {
+    // Shuffle
+    shuffledOptions.sort(() => Math.random() - 0.5);
+
+    shuffledOptions.forEach((optObj) => {
         const btn = document.createElement('button');
         btn.className = 'option-btn';
-        btn.textContent = opt;
-        btn.onclick = () => checkAnswer(index, q.answer, btn, answered);
+        btn.textContent = optObj.text;
+        // Store correctness on the dataset for easy retrieval later
+        btn.dataset.correct = optObj.isCorrect;
+
+        btn.onclick = () => checkAnswer(btn);
         optionsContainer.appendChild(btn);
     });
 }
 
-function checkAnswer(selectedIndex, correctIndex, btnElement, answeredState) {
+function checkAnswer(selectedBtn) {
     if (document.querySelector('.option-btn.clicked')) return; // Prevent double clicks
 
     const buttons = optionsContainer.querySelectorAll('.option-btn');
-    buttons.forEach(b => b.classList.add('clicked')); // Mark all as clicked to disable hover effects visually if needed
+    buttons.forEach(b => b.classList.add('clicked')); // Disable hover
 
-    if (selectedIndex === correctIndex) {
-        btnElement.classList.add('correct');
-        score += 10; // 10 points per question
-        // feedbackArea.textContent = "Tačno! Bravo!";
+    const isCorrect = selectedBtn.dataset.correct === "true";
+
+    if (isCorrect) {
+        selectedBtn.classList.add('correct');
+        score += 10;
     } else {
-        btnElement.classList.add('wrong');
-        // Highlight correct answer
-        buttons[correctIndex].classList.add('correct');
-        // feedbackArea.textContent = "Netačno. Tačan odgovor je označen zelenom bojom.";
+        selectedBtn.classList.add('wrong');
+        // Find and highlight real correct answer
+        buttons.forEach(btn => {
+            if (btn.dataset.correct === "true") {
+                btn.classList.add('correct');
+            }
+        });
     }
 
     updateStats();
 
-    // Auto advance after short delay
     setTimeout(() => {
         nextQuestion();
     }, 1500);
@@ -273,8 +288,11 @@ function updateStats() {
     progressBar.style.width = `${progress}%`;
 }
 
-function endQuiz() {
-    saveScore(playerName, score);
+async function endQuiz() {
+    // Show a temporary state or just wait
+    // We await the save so the leaderboard has the new data when we fetch it
+    await saveScore(playerName, score);
+
     finalScoreEl.textContent = score;
 
     // Message based on score
@@ -289,7 +307,7 @@ function endQuiz() {
         finalMessageEl.textContent = "Trebaš još malo učiti o bezbjednosti. Probaj ponovo! 📚";
     }
 
-    renderLeaderboard(leaderboardListEl);
+    await renderLeaderboard(leaderboardListEl);
     switchScreen(resultScreen);
 
     // Confetti effect trigger can go here
