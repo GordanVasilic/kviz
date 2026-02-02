@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="sr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kviz Znanja: Bezbjednost na Internetu</title>
+    <meta name="description" content="Edukativni kviz za osnovce o sigurnosti na internetu, bontonu i PEGI oznakama.">
+
+    <!-- Open Graph / Facebook / Twitter -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Kviz Znanja: Bezbjednost na Internetu 🛡️">
+    <meta property="og:description" content="Pokaži svoje znanje i postani Internet Heroj! 🚀">
+    <meta name="theme-color" content="#4ECDC4">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Start Screen -->
+        <div id="start-screen" class="screen active">
+            <div class="logo-area">
+                <h1>🌐 Internet Heroj Kviz 🛡️</h1>
+                <p>Pokaži svoje znanje o bezbjednosti, bontonu i PEGI oznakama!</p>
+            </div>
+
+            <div class="input-group">
+                <label for="player-name">Tvoje Ime:</label>
+                <input type="text" id="player-name" placeholder="Upiši nadimak..." autocomplete="off">
+            </div>
+
+            <button id="start-btn" class="btn primary-btn pulse">ZAPOČNI KVIZ 🚀</button>
+            <button id="show-leaderboard-btn" class="btn secondary-btn">🏆 Rang Lista</button>
+        </div>
+
+        <!-- Quiz Screen -->
+        <div id="quiz-screen" class="screen hidden">
+            <div class="quiz-header">
+                <div class="progress-container">
+                    <div class="progress-bar" id="progress-bar"></div>
+                </div>
+                <div class="stats">
+                    <span id="question-count">Pitanje 1/15</span>
+                    <span id="score-display">Bodovi: 0</span>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <h2 id="question-text">Pitanje ide ovdje...</h2>
+                <div class="options-container" id="options-container">
+                    <!-- Options injected here -->
+                </div>
+            </div>
+
+            <div id="feedback-area" class="feedback hidden"></div>
+        </div>
+
+        <!-- Result Screen -->
+        <div id="result-screen" class="screen hidden">
+            <h2>Kviz Završen! 🎉</h2>
+            <div class="result-card">
+                <p class="final-score-label">Tvoj rezultat:</p>
+                <h1 id="final-score">150</h1>
+                <p id="final-message">Odlično!</p>
+            </div>
+
+            <div class="leaderboard-section">
+                <h3>🏆 Top 5 Heroja</h3>
+                <ul id="leaderboard-list">
+                    <!-- Leaderboard items -->
+                </ul>
+            </div>
+
+            <button id="restart-btn" class="btn primary-btn">IGRAJ PONOVO 🔄</button>
+        </div>
+
+        <!-- Leaderboard Only Screen (Accessible from Start) -->
+        <div id="leaderboard-screen" class="screen hidden">
+            <h2>🏆 Rang Lista</h2>
+            <div class="leaderboard-section">
+                <ul id="main-leaderboard-list">
+                    <!-- Leaderboard items -->
+                </ul>
+            </div>
+            <button id="back-to-start-btn" class="btn secondary-btn">⬅️ Nazad</button>
+        </div>
+    </div>
+
+    <!-- Background Elements -->
+    <div class="bg-shape shape-1"></div>
+    <div class="bg-shape shape-2"></div>
+    <div class="bg-shape shape-3"></div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

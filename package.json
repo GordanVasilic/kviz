@@ -1,0 +1,8 @@
+{
+  "name": "internet-heroj-kviz",
+  "version": "1.0.0",
+  "description": "Kviz znanja o bezbjednosti na internetu",
+  "dependencies": {
+    "@vercel/kv": "^1.0.1"
+  }
+}
